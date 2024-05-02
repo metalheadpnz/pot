@@ -1,13 +1,16 @@
-import { useState } from 'react';
-import './App.css';
+import { Box, styled } from '@mui/material';
+import { NavBar } from './components/NavBar.tsx';
+import { GameContainer } from './components/GameContainer.tsx';
+
+const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 function App() {
-  const [count, setCount] = useState(0);
   return (
-    <>
-      <h1>Кастрюля</h1>
-    </>
+    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      <NavBar />
+      <Offset />
+      <GameContainer />
+    </Box>
   );
 }
-
 export default App;
