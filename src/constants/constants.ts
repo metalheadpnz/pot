@@ -6,3 +6,5 @@ export const levelNames = {
 } as const;
 
 export const defaultWordsCountCard = 5;
+
+export const startGameCaptcha: string = '5';

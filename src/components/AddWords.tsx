@@ -49,14 +49,8 @@ export const AddWords = () => {
           Дальше
         </Button>
       </Card>
-      <Card elevation={3} sx={{ padding: 2 }}>
-        <Stack gap={2}>
-          <Typography textAlign={'center'}>
-            Количество участников: {5}
-          </Typography>
-          <Button>Начать игру</Button>
-        </Stack>
-      </Card>
     </Stack>
   );
 };
+
+// position: absolute; bottom: 0
