@@ -1,10 +1,8 @@
 import React from 'react';
 import {
-  Box,
   Button,
   Card,
   Chip,
-  Input,
   Stack,
   TextField,
   Typography,
@@ -51,7 +49,7 @@ export const AddWords = () => {
           Дальше
         </Button>
       </Card>
-      <Card elevation={3} sx={{ padding: 2, marginTop: 'auto', flex: 1 }}>
+      <Card elevation={3} sx={{ padding: 2 }}>
         <Stack gap={2}>
           <Typography textAlign={'center'}>
             Количество участников: {5}
