@@ -39,7 +39,7 @@ export const ModalStartGame: React.FC<PropsType> = ({ isOpen, setIsOpen }) => {
         <DialogTitle>{'Все игроки написали слова?'}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            Все игроки добавили свои слова, Флюгегехаймен не забыли написать?
+            Все игроки добавили свои слова?
           </DialogContentText>
           <TextField
             value={captchaValue}

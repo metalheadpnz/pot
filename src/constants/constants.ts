@@ -7,4 +7,6 @@ export const levelNames = {
 
 export const defaultWordsCountCard = 5;
 
-export const startGameCaptcha: string = '5';
+export const startGameCaptcha: string = 'СЛ!';
+
+export const wordLength = 25;

@@ -1,6 +1,7 @@
-import { Box, styled } from '@mui/material';
+import { Box, styled, ThemeProvider } from '@mui/material';
 import { TopMenu } from './components/TopMenu.tsx';
 import { GameContainer } from './components/GameContainer.tsx';
+import { createTheme } from '@mui/material/styles';
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 

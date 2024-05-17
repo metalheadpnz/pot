@@ -1,23 +1,27 @@
 import React, { useState } from 'react';
 import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
 import { useAppStore } from '../store/app.ts';
-import { levelNames } from '../constants/constants.ts';
+import { defaultWordsCountCard, levelNames } from '../constants/constants.ts';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { ModalStartGame } from './ModalStartGame.tsx';
+import { useWordsStore } from '../store/words.ts';
 
 export const TopMenu = () => {
   const currentLevel = useAppStore(
     (state) => state.currentLevel,
   ) as keyof typeof levelNames;
-
+  const playersCount =
+    useWordsStore((state) => state.allWords).length / defaultWordsCountCard;
+  const _words = useWordsStore((state) => state.allWords);
   const [isOpen, setIsOpen] = useState(false);
 
   const playHandler = () => {
     setIsOpen(true);
+    console.log(_words);
   };
   return (
     <AppBar>
-      <Toolbar>
+      <Toolbar sx={{ paddingX: 3 }}>
         {currentLevel ? (
           <>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
@@ -30,7 +34,7 @@ export const TopMenu = () => {
         ) : (
           <>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Игроков: 5
+              Игроков: {playersCount}
             </Typography>
             <IconButton
               size="large"
