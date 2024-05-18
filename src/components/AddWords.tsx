@@ -9,9 +9,10 @@ import {
 } from '@mui/material';
 import { defaultWordsCountCard, wordLength } from '../constants/constants.ts';
 import { useWordsStore } from '../store/words.ts';
-import { createLogger } from 'vite';
 
 export const AddWords = () => {
+  const addWords = useWordsStore((state) => state.addWords);
+
   const [words, setWords] = useState<Array<string>>([
     // 'Слово',
     // 'Жопа',
@@ -19,9 +20,6 @@ export const AddWords = () => {
     // 'Флюгегентхаймент',
     // 'алло',
   ]);
-
-  const addWords = useWordsStore((state) => state.addWords);
-
   const [currentWord, setCurrentWord] = useState('');
 
   const onInputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,10 +33,11 @@ export const AddWords = () => {
 
   const handleSubmit = (event: React.FocusEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!currentWord.trim()) {
+    const trimmedCurrentWord = currentWord.trim();
+    if (!trimmedCurrentWord) {
       alert('Пусто!');
     }
-    if (words.includes(currentWord.trim())) {
+    if (words.includes(trimmedCurrentWord)) {
       alert('Не повторяйся!');
     } else {
       setWords((prev) => [...prev, currentWord]);
@@ -46,8 +45,8 @@ export const AddWords = () => {
     }
   };
 
-  const onDeleteHandler = (wordToDelete: string) => {
-    const newWords = words.filter((w) => w !== wordToDelete);
+  const onDeleteHandler = (index: number) => {
+    const newWords = words.filter((_, i) => i !== index);
     setWords(newWords);
   };
 
@@ -62,7 +61,7 @@ export const AddWords = () => {
         <form onSubmit={handleSubmit}>
           <Stack gap={2}>
             <TextField
-              disabled={words.length > 4}
+              disabled={words.length >= defaultWordsCountCard}
               label="Добавь слово"
               variant="outlined"
               fullWidth
@@ -72,7 +71,7 @@ export const AddWords = () => {
             <Button
               variant={'contained'}
               type="submit"
-              disabled={!currentWord || words.length > 4}
+              disabled={!currentWord || words.length >= defaultWordsCountCard}
             >
               Добавить
             </Button>
@@ -84,12 +83,12 @@ export const AddWords = () => {
           Осталось добавить слов: {defaultWordsCountCard - words.length}
         </Typography>
         <Stack spacing={1}>
-          {words.map((w) => (
+          {words.map((w, index) => (
             <Chip
               label={w}
               variant="outlined"
               onDelete={() => {
-                onDeleteHandler(w);
+                onDeleteHandler(index);
               }}
               sx={{ justifyContent: 'space-between' }}
             />
