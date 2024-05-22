@@ -9,4 +9,4 @@ export const defaultWordsCountCard = 5;
 
 export const startGameCaptcha: string = 'СЛ!';
 
-export const wordLength = 25;
+export const wordLength = 23;

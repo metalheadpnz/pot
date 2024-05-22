@@ -19,6 +19,8 @@ export const TopMenu = () => {
     setIsOpen(true);
     console.log(_words);
   };
+
+  const timeRemaining = '42';
   return (
     <AppBar>
       <Toolbar sx={{ paddingX: 3 }}>
@@ -27,8 +29,12 @@ export const TopMenu = () => {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               {levelNames[currentLevel]}
             </Typography>
+
+            <Typography variant="h6" component="div" marginRight="2rem">
+              {timeRemaining}
+            </Typography>
             <Typography variant="h6" component="div">
-              Остаток: {5}
+              Ос: {5}
             </Typography>
           </>
         ) : (

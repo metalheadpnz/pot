@@ -6,7 +6,7 @@ type AppStoreType = {
 };
 
 export const useAppStore = create<AppStoreType>((set) => ({
-  currentLevel: 0,
+  currentLevel: 3,
 
   setCurrentLevel: (lvl) => set({ currentLevel: lvl }),
 }));
