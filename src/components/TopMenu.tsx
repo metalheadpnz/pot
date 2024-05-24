@@ -4,6 +4,7 @@ import { defaultWordsCountCard, levelNames } from '../constants/constants.ts';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { useWordsStore } from '../store/words.ts';
 import { Modal } from './Modal.tsx';
+import { useTimer } from '../store/timer.ts';
 
 export const TopMenu = () => {
   const currentLevel = useWordsStore((state) => state.currentLevel);
@@ -11,6 +12,9 @@ export const TopMenu = () => {
     useWordsStore((state) => state.allWords).length / defaultWordsCountCard;
   const reset = useWordsStore((state) => state.reset);
   const startGame = useWordsStore((state) => state.startGame);
+  const saucepanWordsCount = useWordsStore(
+    (state) => state.saucepanWords.length,
+  );
 
   const [isStartModalOpen, setIsStartModalOpen] = useState(false);
   const [isResetModalOpen, setIsResetModalOpen] = useState(false);
@@ -23,7 +27,15 @@ export const TopMenu = () => {
     setIsResetModalOpen(true);
   };
 
-  const timeRemaining = '42';
+  const startBtnHandler = () => {
+    if (playersCount) {
+      startGame();
+    } else {
+      alert('Нужно добавить игроков');
+    }
+  };
+
+  const timer = useTimer((state) => state.timer);
 
   return (
     <AppBar>
@@ -40,10 +52,10 @@ export const TopMenu = () => {
             </Typography>
 
             <Typography variant="h6" component="div" marginRight="2rem">
-              {timeRemaining}
+              {timer}
             </Typography>
             <Typography variant="h6" component="div">
-              Ос: {5}
+              в кастрюле: {saucepanWordsCount}
             </Typography>
           </>
         ) : (
@@ -67,7 +79,7 @@ export const TopMenu = () => {
       <Modal
         isOpen={isStartModalOpen}
         setIsOpen={setIsStartModalOpen}
-        onAgree={startGame}
+        onAgree={startBtnHandler}
         label={'Все игроки написали слова?'}
         text={'Жми ДА и погнали играть!'}
       />

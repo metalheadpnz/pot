@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, Stack, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
+import { useWordsStore } from '../store/words.ts';
 
 type ResultType = {
   team: 'red' | 'blue';
@@ -8,18 +9,27 @@ type ResultType = {
 };
 
 export function InfoScreen() {
+  const redTeamWords = useWordsStore((state) => state.redTeamWords);
+  const blueTeamWords = useWordsStore((state) => state.blueTeamWords);
+  const currentLevel = useWordsStore((state) => state.currentLevel);
+  const nextLevel = useWordsStore((state) => state.nextLevel);
+
   const result: Array<ResultType> = [
     {
       team: 'red',
-      points: 18,
+      points: redTeamWords.length,
     },
     {
       team: 'blue',
-      points: 12,
+      points: blueTeamWords.length,
     },
   ];
 
-  const isEnd: boolean = false;
+  const nextLevelBtnHandler = () => {
+    nextLevel();
+  };
+
+  const isEnd: boolean = currentLevel === 4;
 
   return (
     <Stack>
@@ -39,7 +49,12 @@ export function InfoScreen() {
           </Typography>
         </Card>
       ))}
-      <Button variant={'contained'} color={isEnd ? 'error' : 'primary'}>
+      <Button
+        disabled={isEnd}
+        variant={'contained'}
+        color={isEnd ? 'error' : 'primary'}
+        onClick={nextLevelBtnHandler}
+      >
         {isEnd ? 'Конец игры' : 'Следующий уровень'}
       </Button>
     </Stack>

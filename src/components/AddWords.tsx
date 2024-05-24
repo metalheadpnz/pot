@@ -14,11 +14,11 @@ export const AddWords = () => {
   const addWords = useWordsStore((state) => state.addWords);
 
   const [words, setWords] = useState<Array<string>>([
-    'Слово',
-    'Жопа',
-    'Длинноесловаона',
-    'Флюгегентхаймент',
-    'алло',
+    // 'Слово',
+    // 'Жопа',
+    // 'Длинноесловаона',
+    // 'Флюгегентхаймент',
+    // 'алло',
   ]);
   const [currentWord, setCurrentWord] = useState('');
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Card,
   Checkbox,
@@ -8,6 +8,8 @@ import {
   Typography,
 } from '@mui/material';
 import Button from '@mui/material/Button';
+import { useTimer } from '../../store/timer.ts';
+import { useWordsStore } from '../../store/words.ts';
 
 type WordsToBeConformedType = {
   label: string;
@@ -15,15 +17,19 @@ type WordsToBeConformedType = {
 };
 
 export const ConformScreen = () => {
+  const setTimer = useTimer((state) => state.setTimer);
+  const intervalId = useTimer((state) => state.intervalId);
+  const test = useWordsStore((state) => state.currentStepWords);
+  const nextStep = useWordsStore((state) => state.nextStep);
+  const isRedTeam = useWordsStore((state) => state.currentTeam === 'RED');
   const [wordsToBeConformed, setWordsToBeConformed] = useState<
     Array<WordsToBeConformedType>
-  >([
-    { label: 'Слово', checked: true },
-    { label: 'Жопа', checked: true },
-    { label: 'Длинноесловаона', checked: true },
-    { label: 'Флюгегентхаймент', checked: true },
-    { label: 'алло', checked: true },
-  ]);
+  >(test.map((w) => ({ label: w, checked: true })));
+
+  useEffect(() => {
+    setTimer(0);
+    intervalId && clearInterval(intervalId);
+  }, []);
 
   const handleCheckboxChange = (index: number) => {
     setWordsToBeConformed((prevWords) =>
@@ -40,7 +46,15 @@ export const ConformScreen = () => {
     );
   };
 
-  const nextTeamBtnHandler = () => {};
+  const nextTeamBtnHandler = () => {
+    const matchedWords = wordsToBeConformed
+      .filter((w) => w.checked)
+      .map((w) => w.label);
+    const reverseWords = wordsToBeConformed
+      .filter((w) => !w.checked)
+      .map((w) => w.label);
+    nextStep(matchedWords, reverseWords);
+  };
 
   return (
     <Stack gap={1}>
@@ -50,7 +64,12 @@ export const ConformScreen = () => {
           <FormGroup>
             {wordsToBeConformed.map((word, index) => (
               <FormControlLabel
-                control={<Checkbox checked={word.checked} />}
+                control={
+                  <Checkbox
+                    checked={word.checked}
+                    color={isRedTeam ? 'error' : 'primary'}
+                  />
+                }
                 label={word.label}
                 onChange={() => handleCheckboxChange(index)}
               />
@@ -59,7 +78,11 @@ export const ConformScreen = () => {
         </Stack>
         <Typography variant="h6">Угадано:{getMatchedWordsCount()}</Typography>
       </Card>
-      <Button variant={'contained'} onClick={nextTeamBtnHandler}>
+      <Button
+        variant={'contained'}
+        onClick={nextTeamBtnHandler}
+        color={isRedTeam ? 'error' : 'primary'}
+      >
         Следующий ход
       </Button>
     </Stack>
