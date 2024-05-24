@@ -12,9 +12,18 @@ import { startGameCaptcha } from '../constants/constants.ts';
 type PropsType = {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
+  onAgree: () => void;
+  label: string;
+  text?: string;
 };
 
-export const ModalStartGame: React.FC<PropsType> = ({ isOpen, setIsOpen }) => {
+export const Modal: React.FC<PropsType> = ({
+  isOpen,
+  setIsOpen,
+  onAgree,
+  label,
+  text,
+}) => {
   const [captchaValue, setCaptchaValue] = useState<string>('');
 
   const handleClose = () => {
@@ -24,6 +33,7 @@ export const ModalStartGame: React.FC<PropsType> = ({ isOpen, setIsOpen }) => {
   const handleAgree = () => {
     if (startGameCaptcha === captchaValue) {
       setCaptchaValue('');
+      onAgree();
       setIsOpen(false);
     }
   };
@@ -36,10 +46,10 @@ export const ModalStartGame: React.FC<PropsType> = ({ isOpen, setIsOpen }) => {
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{'Все игроки написали слова?'}</DialogTitle>
+        <DialogTitle>{label}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            Все игроки добавили свои слова?
+            {text}
           </DialogContentText>
           <TextField
             value={captchaValue}
@@ -56,7 +66,7 @@ export const ModalStartGame: React.FC<PropsType> = ({ isOpen, setIsOpen }) => {
           <Button onClick={handleClose} color={'error'}>
             ой, блин
           </Button>
-          <Button onClick={handleAgree}>ПОГНАЛИ!</Button>
+          <Button onClick={handleAgree}>Да</Button>
         </DialogActions>
       </Dialog>
     </>

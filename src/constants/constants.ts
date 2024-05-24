@@ -7,6 +7,13 @@ export const levelNames = {
 
 export const defaultWordsCountCard = 5;
 
-export const startGameCaptcha: string = 'СЛ!';
+export const startGameCaptcha: string = '111';
 
 export const wordLength = 23;
+
+export enum screen {
+  AddWords = 'ADDWORDS',
+  Game = 'GAME',
+  Confirm = 'Confirm',
+  Info = 'Info',
+}
