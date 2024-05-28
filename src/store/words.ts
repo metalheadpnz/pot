@@ -1,7 +1,7 @@
 import { create, StateCreator } from 'zustand';
 import { persist, PersistOptions } from 'zustand/middleware';
 import { levelNames, screen } from '../constants/constants.ts';
-import { getRndIndex } from '../helpers/helpers.ts';
+import { getRndIndex, removeElementFromArray } from '../helpers/helpers.ts';
 
 type WordsStoreType = {
   allWords: Array<string>;
@@ -113,9 +113,11 @@ export const useWordsStore = create<WordsStoreType>(
       },
       catchWord: () => {
         set((state) => {
-          const filteredSaucepanWords = state.saucepanWords.filter(
-            (w) => w !== state.currentWord,
+          const filteredSaucepanWords = removeElementFromArray(
+            state.currentWord,
+            [...state.saucepanWords],
           );
+
           return {
             saucepanWords: [...filteredSaucepanWords],
             currentStepWords: [...state.currentStepWords, state.currentWord],
