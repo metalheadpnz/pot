@@ -1,9 +1,9 @@
 import React from 'react';
 import { Box } from '@mui/material';
 import { GameScreen } from './screens/GameScreen.tsx';
-import { AddWords } from './AddWords.tsx';
+import { AddWords } from './screens/AddWords.tsx';
 import { ConformScreen } from './screens/ConformScreen.tsx';
-import { InfoScreen } from './InfoScreen.tsx';
+import { InfoScreen } from './screens/InfoScreen.tsx';
 import { useWordsStore } from '../store/words.ts';
 import { screen } from '../constants/constants.ts';
 

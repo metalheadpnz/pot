@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Stack, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
-import { useWordsStore } from '../store/words.ts';
+import { useWordsStore } from '../../store/words.ts';
 
 type ResultType = {
   team: 'red' | 'blue';
