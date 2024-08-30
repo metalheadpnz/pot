@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import { useWordsStore } from '../../store/words.ts';
 import { useTimer } from '../../store/timer.ts';
 import { levelsTime, screen } from '../../constants/constants.ts';
+import radarSound from '../../assets/radarSound.mp3'
 
 export const GameScreen = () => {
   const isRedTeam = useWordsStore((state) => state.currentTeam === 'RED');
@@ -18,6 +19,7 @@ export const GameScreen = () => {
   const intervalId = useTimer((state) => state.intervalId);
   const setIntervalId = useTimer((state) => state.setIntervalId);
   const setCurrentScreen = useWordsStore((state) => state.setCurrentScreen);
+  const radarSoundAudio = new Audio(radarSound)
 
   const [isActive, setIsActive] = useState(false);
 
@@ -37,6 +39,7 @@ export const GameScreen = () => {
     if (timer <= 0) {
       intervalId && clearInterval(intervalId);
       isActive && setCurrentScreen(screen.Confirm);
+      isActive &&  radarSoundAudio.play()
       setIsActive(false);
     }
   }, [timer]);
