@@ -4,7 +4,8 @@ import Button from '@mui/material/Button';
 import { useWordsStore } from '../../store/words.ts';
 import { useTimer } from '../../store/timer.ts';
 import { levelsTime, screen } from '../../constants/constants.ts';
-import radarSound from '../../assets/radarSound.mp3'
+import radarSound from '../../assets/radarSound.mp3';
+import tickSound from '../../assets/tick-sound.mp3';
 
 export const GameScreen = () => {
   const isRedTeam = useWordsStore((state) => state.currentTeam === 'RED');
@@ -19,7 +20,8 @@ export const GameScreen = () => {
   const intervalId = useTimer((state) => state.intervalId);
   const setIntervalId = useTimer((state) => state.setIntervalId);
   const setCurrentScreen = useWordsStore((state) => state.setCurrentScreen);
-  const radarSoundAudio = new Audio(radarSound)
+  const radarSoundAudio = new Audio(radarSound);
+  const tickSoundAudio = new Audio(tickSound);
 
   const [isActive, setIsActive] = useState(false);
 
@@ -34,12 +36,14 @@ export const GameScreen = () => {
   const okBtnHandler = () => {
     catchWord();
   };
-
   useEffect(() => {
+    if (timer < 6 && timer > 0) {
+      tickSoundAudio.play();
+    }
     if (timer <= 0) {
       intervalId && clearInterval(intervalId);
       isActive && setCurrentScreen(screen.Confirm);
-      isActive &&  radarSoundAudio.play()
+      isActive && radarSoundAudio.play();
       setIsActive(false);
     }
   }, [timer]);
