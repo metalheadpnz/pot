@@ -13,9 +13,11 @@ import {
   wordLength,
 } from '../../constants/constants.ts';
 import { useWordsStore } from '../../store/words.ts';
+import radarSound from '../../assets/radarSound.mp3';
 
 export const AddWords = () => {
   const addWords = useWordsStore((state) => state.addWords);
+  const radarSoundAudio = new Audio(radarSound)
 
   const [words, setWords] = useState<Array<string>>([]);
   const [currentWord, setCurrentWord] = useState('');
@@ -52,6 +54,11 @@ export const AddWords = () => {
     addWords(words);
     setWords([]);
   };
+
+  const soundTest = () => {
+    radarSoundAudio.play()
+  }
+
 
   return (
     <>
@@ -104,7 +111,14 @@ export const AddWords = () => {
             Дальше
           </Button>
         </Card>
+        <Button
+          variant="contained"
+          onClick={soundTest}
+        >
+          тест звука
+        </Button>
       </Stack>
+
       <Box
         sx={{
           position: 'fixed',
